@@ -1,6 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+<script language="JavaScript">
+        <!--
+        // Store the date In avarlable
+        d = new Date()
+        dateText = ""
+        // Get the cuurent day and convert it to the name of the day
+        dayValue = d.getDay()
+        if(dayValue == 0)
+        dateText += "Chủ Nhật"
+        else if (dayValue == 1)
+        dateText += "Thứ hai"
+        else if (dayValue == 2)
+        dateText += "Thứ Ba"
+        else if (dayValue == 3)
+        dateText += "Thứ Tư"
+        else if (dayValue == 4)
+        dateText += "Thứ Năm"
+        else if (dayValue == 5)
+        dateText += "Thứ Sáu"
+        else if (dayValue == 6)
+        dateText += "Thứ Bảy"
+        // Get the current date; if it's before 2000,add 1900
+        dateText += ", Ngày " + d.getDate()
+        monthValue = d.getMonth()
+        dateText += " "
+        if (monthValue == 0)
+        dateText += "Tháng 1"
+        if (monthValue == 1)
+        dateText += "Tháng 2"
+        if (monthValue == 2)
+        dateText += "Tháng 3"
+        if (monthValue == 3)
+        dateText += "Tháng 4­"
+        if (monthValue == 4)
+        dateText += "Tháng 5"
+        if (monthValue == 5)
+        dateText += "Tháng 6"
+        if (monthValue == 6)
+        dateText += "Tháng 7"
+        if (monthValue == 7)
+        dateText += "Tháng 8"
+        if (monthValue == 8)
+        dateText += "Tháng 9"
+        if (monthValue == 9)
+        dateText += "Tháng 10"
+        if (monthValue == 10)
+        dateText += "Tháng 11"
+        if (monthValue == 11)
+        dateText += "Tháng 12"
+        // Get the current year; if it's before 2000, add 1900
+        if (d.getYear() < 2000)
+        dateText += ", Năm " + (1900 + d.getYear())
+        else
+        dateText += ", Năm " + (d.getYear())
+        // Get the current minutes
+        minuteValue = d.getMinutes()
+        if (minuteValue < 10)
+        minuteValue = "0" + minuteValue
+        // Get the current hours
+        hourValue = d.getHours()
+        // Customize the greeting based on the current hours
+        if (hourValue >=5 && hourValue <= 10)
+        {
+        timeText =  ". Chào buổi sáng và chúc một ngày tốt lành!"
+        }
+        else if (hourValue > 10 && hourValue <= 12)
+        {
+        timeText =  ". Chào buổi trưa - Bạn ăn cơm chưa vậy?"
+        }
+        else if (hourValue >= 13 && hourValue <17)
+        {
+        timeText = ". Chào buổi chiều! "
+        }
+        else if (hourValue >=17 && hourValue <18)
+        {
+        timeText = ". Chào buổi chiều bạn nhé!"
+        }
+        else if (hourValue >=18 && hourValue<21)
+        {
+        timeText =  ". Chào buổi tối!"
+        }
+        else if( hourValue >=21 && hourValue <=24)
+        {
+        timeText =  ". Chúc bạn ngủ ngon và có giấc mơ đẹp!"
+        }
+        else if(hourValue >=1 && hourValue <5 )
+        {
+        timeText = ". Chúc bạn một ngày vui vẻ!"
+        }
+        document.write(  dateText + "" + timeText + "")
+        -->
+        </script>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -157,3 +248,100 @@
         <script src="./script.js"></script>
     </body>
 </html>
+<script type="text/javascript">
+    //<![CDATA[
+    // Số bông tuyết (Không khuyến khích nhiều hơn 30-40)
+    var snowmax=40
+    // Tùy chọn màu sắc cho tuyết, có thể nhiều màu khác nhau như bên dưới
+    var snowcolor=new Array("#aaaacc","#ddddff","#ccccdd","#f3f3f3","#f0ffff")
+    // Thiết lập font chữ để tạo ra tuyết, vì các font chữ khác nhau thì hình dạng dấu * cũng khác nhau
+    var snowtype=new Array("Times","Arial","Times","Verdana")
+    // Thiết lập ký tự tạo ra tuyết (Khuyến khích: *)
+    var snowletter="*"
+    // Thiết lập tốc độ rơi xuống (Đề nghị trong khoảng 0.3-2)
+    var sinkspeed=0.6
+    // Kích thước tối đa của bông tuyết
+    var snowmaxsize=50
+    // Kích thước tối thiểu của bông tuyết
+    var snowminsize=8
+    // Thiết lập vùng tuyết rơi
+    // 1 cho toàn bộ trang web, 2 cho phần bên trái
+    // 3 cho phần trung tâm, 4 cho phần bên phải
+    var snowingzone=1
+    ///////////////////////////////////////////////////////////////////////////
+    // OK
+    ///////////////////////////////////////////////////////////////////////////
+    // Không được chỉnh code ở bên dưới
+    var snow=new Array()
+    var marginbottom
+    var marginright
+    var timer
+    var i_snow=0
+    var x_mv=new Array();
+    var crds=new Array();
+    var lftrght=new Array();
+    var browserinfos=navigator.userAgent
+    var ie5=document.all&&document.getElementById&&!browserinfos.match(/Opera/)
+    var ns6=document.getElementById&&!document.all
+    var opera=browserinfos.match(/Opera/)
+    var browserok=ie5||ns6||opera
+    function randommaker(range) {
+            rand=Math.floor(range*Math.random())
+        return rand
+    }
+    function initsnow() {
+            if (ie5 || opera) {
+                    marginbottom = document.body.scrollHeight
+                    marginright = document.body.clientWidth-15
+            }
+            else if (ns6) {
+                    marginbottom = document.body.scrollHeight
+                    marginright = window.innerWidth-15
+            }
+            var snowsizerange=snowmaxsize-snowminsize
+            for (i=0;i<=snowmax;i++) {
+                    crds[i] = 0;
+                lftrght[i] = Math.random()*15;
+                x_mv[i] = 0.03 + Math.random()/10;
+                    snow[i]=document.getElementById("s"+i)
+                    snow[i].style.fontFamily=snowtype[randommaker(snowtype.length)]
+                    snow[i].size=randommaker(snowsizerange)+snowminsize
+                    snow[i].style.fontSize=snow[i].size+'px';
+                    snow[i].style.color=snowcolor[randommaker(snowcolor.length)]
+                    snow[i].style.zIndex=1000
+                    snow[i].sink=sinkspeed*snow[i].size/5
+                    if (snowingzone==1) {snow[i].posx=randommaker(marginright-snow[i].size)}
+                    if (snowingzone==2) {snow[i].posx=randommaker(marginright/2-snow[i].size)}
+                    if (snowingzone==3) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}
+                    if (snowingzone==4) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}
+                    snow[i].posy=randommaker(2*marginbottom-marginbottom-2*snow[i].size)
+                    snow[i].style.left=snow[i].posx+'px';
+                    snow[i].style.top=snow[i].posy+'px';
+            }
+            movesnow()
+    }
+    function movesnow() {
+            for (i=0;i<=snowmax;i++) {
+                    crds[i] += x_mv[i];
+                    snow[i].posy+=snow[i].sink
+                    snow[i].style.left=snow[i].posx+lftrght[i]*Math.sin(crds[i])+'px';
+                    snow[i].style.top=snow[i].posy+'px';
+                    if (snow[i].posy>=marginbottom-2*snow[i].size || parseInt(snow[i].style.left)>(marginright-3*lftrght[i])){
+                            if (snowingzone==1) {snow[i].posx=randommaker(marginright-snow[i].size)}
+                            if (snowingzone==2) {snow[i].posx=randommaker(marginright/2-snow[i].size)}
+                            if (snowingzone==3) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}
+                            if (snowingzone==4) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}
+                            snow[i].posy=0
+                    }
+            }
+            var timer=setTimeout("movesnow()",50)
+    }
+    for (i=0;i<=snowmax;i++) {
+            document.write("<span id='s"+i+"' style='position:absolute;top:-"+snowmaxsize+"'>"+snowletter+"</span>")
+    }
+    if (browserok) {
+            window.onload=initsnow
+    }
+    //]]>
+    </script>
+
